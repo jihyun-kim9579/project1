@@ -1,0 +1,10 @@
+/node_modules
+*.java
+*.db
+.DS_STORE
+.txt
+.c
+.py
+.env
+.env.local
+.env.local.development
