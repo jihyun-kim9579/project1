@@ -5,6 +5,8 @@ const __filename = fileURLToPath(import.meta.url);   // 👈 추가
 import express from "express";
 import helmet from "helmet";
 import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 
 
 
@@ -27,11 +29,11 @@ app.get('/', function (req, res) {
 app.get('/getAllUsers', function (req, res) {
   pool.getConnection()
   .then(conn => {
-    console.log("====mariaDB is connect=====")
+    console.log("=========mariaDB is connect==========")
     conn.query("SELECT * FROM users")
       .then((rows) => {
-        return res.status(200).json(rows); // 응답상태 200 (정상) , 데이터는 JSON으로
-        conn.end(); // 또다른 요청에 응답하기 위해 한번 요청하면 접속 끊기
+        res.status(200).json(rows); // 응답상태 200 (정상) , 데이터는 JSON으로
+        return conn.end(); // 또다른 요청에 응답하기 위해 한번 요청하면 접속 끊기
       })
       .catch(err => {
         //handle error
