@@ -3,11 +3,8 @@ const __dirname = fileURLToPath(new URL(".", import.meta.url));   // 👈 추가
 const __filename = fileURLToPath(import.meta.url);   // 👈 추가
 
 import express from "express";
-import mariadb from "mariadb";
 import helmet from "helmet";
 import cors from "cors";
-import dotenv from "dotenv";
-dotenv.config();
 
 
 
@@ -20,14 +17,7 @@ app.use(helmet());
 // route : .get():받기 , .post():보내기 , .put():보내서 부분 수정 , .delete() : 보내서 삭제
 // RESTful API : REpresentation (대표성 있는 방식으로 요청 URL을 생성하는 규칙)
 
-// db connection
-const pool = mariadb.createPool({
-  host: process.env.DB_HOST, 
-  user: process.env.DB_USER, 
-  password : process.env.DB_PWD,
-  database: process.env.DB_NAME,
-  connectionLimit: 5
-});
+
 
 app.get('/', function (req, res) {
   //console.log(__dirname);
