@@ -11,7 +11,7 @@ const pool = mariadb.createPool({
     connectionLimit: 5
   });
 
-// arrow function
+//arrow function
 const getAllUsers = async () => {
     let conn; // 연결설정 변수 (연결 POOL)
     try{
@@ -26,11 +26,43 @@ const getAllUsers = async () => {
 
 }
 
+const getOneUser = async (userId) => {
+    let conn; // 연결설정 변수 (연결 POOL)
+    try{
+        conn = await pool.getConnection();
+        const rows = await conn.query("SELECT * FROM users WHERE id =?" , [userId]);
+        return rows;
+    } catch(err) {
+        console.log(err);        
+    }  finally {
+        if(conn) conn.end();
+    }
+
+}
+
+const addOneUser = async (userId, userName , userEmail) => {
+    let conn; // 연결설정 변수 (연결 POOL)
+    try{
+        conn = await pool.getConnection();
+        const rows = await conn.query("INSERT INTO users (id , name , email) VALUES (?,?,?)" , [userId, userName , userEmail]);
+        return rows;
+    } catch(err) {
+        console.log(err);        
+    }  finally {
+        if(conn) conn.end();
+    }
+
+}
+
+
+
 //객체 (Object) : 변수 (문자열,숫자 ,논리) ,함수 ,클래스 ,심볼...
 // 자바 스크립트 자료형을 담을 수 있다.
 
 const userModel = {
-    getAllUsers
+    getAllUsers,
+    getOneUser,
+    addOneUser
 }
 
 
